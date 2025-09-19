@@ -3,8 +3,8 @@ export default class KnightPredictor {
   #boardMax;
   #knightMoves;
 
-  constructor(boardMin = 0, boardMax = 7) {
-    this.#boardMin = boardMin;
+  constructor(boardMax = 7) {
+    this.#boardMin = 0;
     this.#boardMax = boardMax;
 
     this.#knightMoves = [
@@ -67,4 +67,7 @@ export default class KnightPredictor {
       cords[1] <= this.#boardMax
     );
   }
+
+  getBoardRowSize = () => this.#boardMax + 1;
+  getBoardSize = () => this.#boardMax + 1;
 }
