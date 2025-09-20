@@ -68,6 +68,6 @@ export default class KnightPredictor {
     );
   }
 
-  getBoardRowSize = () => this.#boardMax + 1;
-  getBoardSize = () => this.#boardMax + 1;
+  getRowSize = () => this.#boardMax + 1;
+  getBoardSize = () => (this.#boardMax + 1) * (this.#boardMax + 1);
 }
