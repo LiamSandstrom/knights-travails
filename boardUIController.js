@@ -82,18 +82,16 @@ export default class BoardUIController {
 
   handleUp = (e) => this.stopDrag(e);
 
+  touchMove = (e) => {
+    e.preventDefault();
+    this.handleMove(e);
+  };
+
   startKnightDrag(e) {
     if (this.#isAnimating) return;
     document.addEventListener("mousemove", this.handleMove);
     document.addEventListener("mouseup", this.handleUp);
-    document.addEventListener(
-      "touchmove",
-      (e) => {
-        e.preventDefault();
-        this.handleMove(e);
-      },
-      { passive: false }
-    );
+    document.addEventListener("touchmove", this.touchMove, { passive: false });
     document.addEventListener("touchend", this.handleUp);
 
     this.#boardUI.startKnightDrag();
@@ -103,7 +101,7 @@ export default class BoardUIController {
   stopDrag(e) {
     document.removeEventListener("mousemove", this.handleMove);
     document.removeEventListener("mouseup", this.handleUp);
-    document.removeEventListener("touchstart", this.handleMove);
+    document.removeEventListener("touchmove", this.touchMove);
     document.removeEventListener("touchend", this.handleUp);
 
     this.#boardUI.stopKnightDrag();
