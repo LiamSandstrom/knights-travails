@@ -49,8 +49,8 @@ export default class BoardUI {
     cell.classList.add("black");
   }
 
-  setCellGoal(cell){
-    cell.classList.add("goal")
+  setCellGoal(cell) {
+    cell.classList.add("goal");
   }
 
   setKnightCell(index) {
@@ -62,8 +62,8 @@ export default class BoardUI {
     return this.#board.children[index];
   }
 
-  getIndexOfCell(element){
-    return Array.from(this.#board.children).indexOf(element)
+  getIndexOfCell(element) {
+    return Array.from(this.#board.children).indexOf(element);
   }
 
   removeKnight(cords) {
@@ -79,15 +79,21 @@ export default class BoardUI {
 
   onKnightMouseDown(cb) {
     this.#knightElement.addEventListener("mousedown", cb);
+    this.#knightElement.addEventListener("touchstart", cb);
   }
 
   moveKnightDrag(e) {
-    this.#copyKnight.style.left = `${
-      e.pageX - this.#copyKnight.offsetWidth / 2
-    }px`;
-    this.#copyKnight.style.top = `${
-      e.pageY - this.#copyKnight.offsetHeight / 2
-    }px`;
+    let x;
+    let y;
+    if (e.touches) {
+      x = e.touches[0].clientX;
+      y = e.touches[0].clientY;
+    } else {
+      x = e.pageX;
+      y = e.pageY;
+    }
+    this.#copyKnight.style.left = `${x - this.#copyKnight.offsetWidth / 2}px`;
+    this.#copyKnight.style.top = `${y - this.#copyKnight.offsetHeight / 2}px`;
   }
 
   startKnightDrag() {

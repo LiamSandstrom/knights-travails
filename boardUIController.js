@@ -3,11 +3,13 @@ export default class BoardUIController {
   #knightPredictor;
   #knightCell;
   #path;
+  #isAnimating;
   constructor(boardUI, knightPredictor) {
     this.#boardUI = boardUI;
     this.#knightPredictor = knightPredictor;
     this.#knightCell = [4, 4];
     this.#path = [];
+    this.#isAnimating = false;
   }
 
   delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -41,6 +43,7 @@ export default class BoardUIController {
   }
 
   cellClicked = (cords, cell) => {
+    if (this.#isAnimating) return;
     if (this.#path.length > 0) {
       for (const cell of this.#path) {
         cell.classList.remove("path");
@@ -55,6 +58,7 @@ export default class BoardUIController {
   };
 
   async showShortestPath(moves) {
+    this.#isAnimating = true;
     for (const move of moves) {
       const cell = this.#boardUI.getCell(this.cordsToIndex(move));
       cell.classList.add("path");
@@ -62,6 +66,7 @@ export default class BoardUIController {
       this.setKnightCell(move);
       await this.delay(1000);
     }
+    this.#isAnimating = false;
   }
 
   #bindKnightEvents() {
@@ -74,11 +79,22 @@ export default class BoardUIController {
     const cell = this.#getCellUnderMouse(e);
     if (cell) this.#boardUI.setCellUnderKnight(cell);
   };
+
   handleUp = (e) => this.stopDrag(e);
 
   startKnightDrag(e) {
+    if (this.#isAnimating) return;
     document.addEventListener("mousemove", this.handleMove);
     document.addEventListener("mouseup", this.handleUp);
+    document.addEventListener(
+      "touchmove",
+      (e) => {
+        e.preventDefault();
+        this.handleMove(e);
+      },
+      { passive: false }
+    );
+    document.addEventListener("touchend", this.handleUp);
 
     this.#boardUI.startKnightDrag();
     this.#boardUI.moveKnightDrag(e);
@@ -87,6 +103,8 @@ export default class BoardUIController {
   stopDrag(e) {
     document.removeEventListener("mousemove", this.handleMove);
     document.removeEventListener("mouseup", this.handleUp);
+    document.removeEventListener("touchstart", this.handleMove);
+    document.removeEventListener("touchend", this.handleUp);
 
     this.#boardUI.stopKnightDrag();
 
@@ -99,7 +117,19 @@ export default class BoardUIController {
   }
 
   #getCellUnderMouse(e) {
-    return document.elementFromPoint(e.pageX, e.pageY).closest(".cell");
+    let x, y;
+    if (e.touches && e.touches.length > 0) {
+      x = e.touches[0].clientX;
+      y = e.touches[0].clientY;
+    } else if (e.changedTouches && e.changedTouches.length > 0) {
+      x = e.changedTouches[0].clientX;
+      y = e.changedTouches[0].clientY;
+    } else {
+      x = e.clientX;
+      y = e.clientY;
+    }
+
+    return document.elementFromPoint(x, y).closest(".cell");
   }
 }
 
