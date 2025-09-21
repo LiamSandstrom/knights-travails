@@ -23,12 +23,16 @@ body {
 
 .board {
   display: grid;
-  width: 400px;
-  height: 400px;
+  aspect-ratio: 1 / 1;
+  width: max(300px, min(90vmin, 550px));
   border: 3px solid var(--text);
 }
 
 .cell {
+    display: flex;
+    cursor: pointer;
+    will-change: border;
+    transition: 0.15s border;
 }
 
 .white {
@@ -39,6 +43,30 @@ body {
   background-color: var(--cell2);
 }
 
-.knight{
-    background-color: green;
+.knight {
+  width: 100%;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-drag: none;
+  -moz-user-drag: none;
+  -ms-user-drag: none;
+  user-drag: none;
+}
+
+.knight-copy {
+  position: absolute;
+  pointer-events: none;
+}
+
+.cell-under-knight {
+    border: 2px solid yellow;
+}
+
+.path{
+
+    border: 3px solid yellow;
+}
+
+.goal{
+    border: 3px solid rgb(116, 221, 116);
 }

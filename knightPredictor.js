@@ -21,7 +21,6 @@ export default class KnightPredictor {
 
   knightMoves(startCords, goalCords) {
     if (!this.#validCords(startCords) || !this.#validCords(goalCords)) {
-      console.log("Invalid cords");
       return;
     }
 
