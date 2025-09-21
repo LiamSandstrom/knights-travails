@@ -29,8 +29,12 @@ body {
 }
 
 .cell {
-    display: flex;
-    cursor: pointer;
+  display: flex;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
 }
 
 .white {
@@ -49,6 +53,7 @@ body {
   -moz-user-drag: none;
   -ms-user-drag: none;
   user-drag: none;
+  touch-action: none;
 }
 
 .knight-copy {
@@ -57,14 +62,13 @@ body {
 }
 
 .cell-under-knight {
-    border: 2px solid yellow;
+  border: 2px solid yellow;
 }
 
-.path{
-
-    border: 3px solid yellow;
+.path {
+  border: 3px solid yellow;
 }
 
-.goal{
-    border: 3px solid rgb(116, 221, 116);
+.goal {
+  border: 3px solid rgb(116, 221, 116);
 }
