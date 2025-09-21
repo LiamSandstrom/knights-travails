@@ -60,11 +60,11 @@ export default class BoardUIController {
   async showShortestPath(moves) {
     this.#isAnimating = true;
     for (const move of moves) {
+      await this.delay(900);
       const cell = this.#boardUI.getCell(this.cordsToIndex(move));
       cell.classList.add("path");
       this.#path.push(cell);
       this.setKnightCell(move);
-      await this.delay(1000);
     }
     this.#isAnimating = false;
   }
