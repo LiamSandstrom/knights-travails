@@ -2,18 +2,20 @@
 
 ## Overview
 
-This project finds the shortest path a knight can take on a chessboard (or any rectangular board) from a start position to a goal position using Breadth-First Search (BFS).
+This project finds the shortest path a knight can take on a chessboard (or any rectangular board) from a start position to a goal position using Breadth-First Search (BFS). You can move the knight by drag and drop. Click on a square and the knight will find one of the shortest paths!
+
+Live preview -> https://liamsandstrom.github.io/knights-travails/
 
 ## Implementation Details
 
-* **Initial Approach:**
+- **Initial Approach:**
 
-  * Stored the entire path in each queue element.
-  * Easy to reconstruct the path but memory-intensive.
+  - Stored the entire path in each queue element.
+  - Easy to reconstruct the path but memory-intensive.
 
-* **Optimized Approach:**
+- **Optimized Approach:**
 
-  * Store **only a reference to the parent node** for each move (similar to a linked list).
-  * Start node's parent is `null`.
-  * When the goal is reached, traverse the parent references backward to reconstruct the full path.
-  * This approach reduces memory usage while still allowing complete path reconstruction.
+  - Store **only a reference to the parent node** for each move (similar to a linked list).
+  - Start node's parent is `null`.
+  - When the goal is reached, traverse the parent references backward to reconstruct the full path.
+  - This approach reduces memory usage while still allowing complete path reconstruction.

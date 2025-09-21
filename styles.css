@@ -31,8 +31,6 @@ body {
 .cell {
     display: flex;
     cursor: pointer;
-    will-change: border;
-    transition: 0.15s border;
 }
 
 .white {
